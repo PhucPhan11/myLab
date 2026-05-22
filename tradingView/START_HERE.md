@@ -7,6 +7,8 @@ Welcome! Your **production-ready stock portfolio tracker** is ready to use.
 ```bash
 # 1. Install dependencies
 pip install -r requirements.txt
+# tvDatafeed
+python -m pip install git+https://github.com/rongardF/tvdatafeed.git
 
 # 2. Edit portfolio.txt with your stocks
 # Format: buy_date|symbol|exchange|quantity|buy_price
