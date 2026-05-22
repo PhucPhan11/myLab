@@ -1,0 +1,19 @@
+# Test portfolio with mixed valid and invalid entries
+
+# Valid entries
+2026-05-25|BSR|HOSE|8|30900
+2026-05-25|DCM|HOSE|5|41900
+
+# Comment line should be ignored
+# Format: date|symbol|exchange|quantity|price
+
+# Empty line above (should be ignored)
+
+# Invalid entries that should be skipped
+2026-05-25|VNM|HOSE|8x|30900
+2026-05-25|VIC|HOSE|10|-1000
+2026-05-25|HPG
+2026-05-25|FPT|HOSE|invalid|50000
+
+# Valid entry
+2026-05-20|MWG|HOSE|7|45000

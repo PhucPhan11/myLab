@@ -3,6 +3,7 @@
 ## What You Got
 
 A production-ready Python stock portfolio tracking system that:
+- ✅ Loads portfolio from externalized text file (no code changes!)
 - ✅ Tracks multiple stocks with real-time prices from TradingView
 - ✅ Calculates profit/loss amounts and percentages
 - ✅ Exports reports to CSV
@@ -15,7 +16,9 @@ A production-ready Python stock portfolio tracking system that:
 | File | Purpose |
 |------|---------|
 | `portfolio_tracker.py` | Main script - run this! |
-| `portfolio_config.py` | Configuration and portfolio data |
+| `portfolio_loader.py` | Portfolio data loader (NEW!) |
+| `portfolio.txt` | Portfolio data file (externalized!) |
+| `portfolio_config.py` | Configuration and settings |
 | `advanced_integration.py` | Examples for production use |
 | `requirements.txt` | Python dependencies |
 | `README.md` | Detailed documentation |
@@ -29,14 +32,27 @@ A production-ready Python stock portfolio tracking system that:
 # 1. Install dependencies
 pip install -r requirements.txt
 
-# 2. Edit your portfolio in portfolio_tracker.py (lines 42-61)
-# OR use portfolio_config.py to load from JSON
+# 2. Edit your portfolio in portfolio.txt (see below)
 
 # 3. Run the tracker
 python portfolio_tracker.py
 ```
 
-## Example Output
+## Configure Your Portfolio
+
+Edit `portfolio.txt` with your stock holdings:
+
+```txt
+# Format: buy_date | symbol | exchange | quantity | buy_price
+# Comments starting with # are ignored
+# Empty lines are ignored
+
+2026-05-25|BSR|HOSE|8|30900
+2026-05-25|DCM|HOSE|5|41900
+2026-05-20|FPT|HOSE|10|60000
+```
+
+That's it! No Python code changes needed.
 
 ```
 ==================================================
@@ -77,41 +93,37 @@ Report saved to: portfolio_report.csv
 
 ## Key Features Explained
 
-### 1. Multiple Portfolio Support
-Edit `PORTFOLIO` list in `portfolio_tracker.py`:
-```python
-PORTFOLIO = [
-    {
-        "buy_date": "2026-05-01",
-        "symbol": "BSR",
-        "exchange": "HOSE",
-        "quantity": 1000,
-        "buy_price": 18000
-    },
-    # Add more entries here...
-]
+### 1. Externalized Portfolio Data (NEW!)
+No need to edit Python code. Edit `portfolio.txt`:
+```txt
+2026-05-25|BSR|HOSE|8|30900
+2026-05-25|DCM|HOSE|5|41900
 ```
 
-### 2. Smart Caching
+### 2. Multiple Portfolio Support
+Add as many stocks as you want to `portfolio.txt`
+
+### 3. Smart Caching
 Avoids duplicate API calls for the same stock:
 ```python
 # First BSR call: 1 second (API fetch)
 # Second BSR call: <1ms (cache hit)
 ```
 
-### 3. Automatic CSV Export
+### 4. Automatic CSV Export
 Generates `portfolio_report.csv` with all metrics:
 - Buy/Current prices
 - Quantities
 - Investment amounts
 - Profit/Loss metrics
 
-### 4. Comprehensive Error Handling
+### 5. Comprehensive Error Handling
 - Handles missing TradingView data gracefully
 - Logs all operations for debugging
 - Skips failed entries, continues processing others
+- Validates portfolio format on load
 
-### 5. Production-Ready Code
+### 6. Production-Ready Code
 - Type hints for IDE support
 - Docstrings on all functions
 - Clean variable naming
@@ -120,6 +132,12 @@ Generates `portfolio_report.csv` with all metrics:
 ## Main Functions
 
 ```python
+# Load portfolio from file
+portfolio = load_portfolio_from_file("portfolio.txt")
+
+# Validate portfolio
+is_valid, msg = validate_portfolio(portfolio)
+
 # Fetch current price from TradingView
 current_price = fetch_stock_price(tv, "BSR", "HOSE")
 
@@ -140,6 +158,8 @@ positions, summary = process_portfolio(PORTFOLIO)
 
 All operations are logged. Check the console output:
 ```
+2026-05-22 11:56:14,859 - INFO - Portfolio loaded successfully from portfolio.txt
+2026-05-22 11:56:14,859 - INFO - Loaded 2 portfolio entries
 2026-05-21 15:20:30,123 - INFO - Starting portfolio analysis
 2026-05-21 15:20:31,456 - INFO - Fetching price for HOSE:BSR
 2026-05-21 15:20:32,789 - INFO - Got price for HOSE:BSR: 30,700
@@ -160,10 +180,13 @@ Edit line 19:
 OUTPUT_CSV = "my_portfolio_report.csv"
 ```
 
-### Adjust Cache TTL
-Edit line 318 (in `process_portfolio` function):
-```python
-price_cache[cache_key] = current_price  # Modify caching logic
+### Add More Stocks
+Just edit `portfolio.txt`:
+```txt
+2026-05-25|BSR|HOSE|8|30900
+2026-05-25|DCM|HOSE|5|41900
+2026-05-20|FPT|HOSE|10|60000
+# Add more as needed
 ```
 
 ## Next Steps to Scale

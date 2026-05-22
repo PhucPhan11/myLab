@@ -11,6 +11,7 @@ from datetime import datetime
 from typing import List, Dict, Optional, Tuple
 from tvDatafeed import TvDatafeed, Interval
 import os
+from portfolio_loader import load_portfolio_from_file, validate_portfolio
 
 # ============================================================================
 # CONSTANTS AND CONFIGURATION
@@ -33,30 +34,10 @@ logger = logging.getLogger(__name__)
 # PORTFOLIO DATA
 # ============================================================================
 
-# Define your portfolio here - easy to scale to database later
-PORTFOLIO = [
-    {
-        "buy_date": "2026-05-01",
-        "symbol": "BSR",
-        "exchange": "HOSE",
-        "quantity": 1000,
-        "buy_price": 18000
-    },
-    {
-        "buy_date": "2026-04-15",
-        "symbol": "FPT",
-        "exchange": "HOSE",
-        "quantity": 200,
-        "buy_price": 120000
-    },
-    {
-        "buy_date": "2026-03-20",
-        "symbol": "VNM",
-        "exchange": "HOSE",
-        "quantity": 100,
-        "buy_price": 87000
-    }
-]
+# Load portfolio from external file
+# This allows editing portfolio without modifying source code
+PORTFOLIO_FILE = "portfolio.txt"
+PORTFOLIO = load_portfolio_from_file(PORTFOLIO_FILE)
 
 
 # ============================================================================
@@ -319,6 +300,20 @@ def process_portfolio(portfolio: List[Dict]) -> Tuple[List[Dict], Dict]:
 def main():
     """Main execution function."""
     logger.info("Starting portfolio analysis")
+    
+    # Validate portfolio data
+    if not PORTFOLIO:
+        logger.error("Portfolio is empty - cannot proceed")
+        print("Error: Portfolio is empty. Please check portfolio.txt file.")
+        return
+    
+    is_valid, validation_msg = validate_portfolio(PORTFOLIO)
+    if not is_valid:
+        logger.error(f"Portfolio validation failed: {validation_msg}")
+        print(f"Error: {validation_msg}")
+        return
+    
+    logger.info(f"Portfolio validation: {validation_msg}")
     
     # Process portfolio
     positions, summary = process_portfolio(PORTFOLIO)

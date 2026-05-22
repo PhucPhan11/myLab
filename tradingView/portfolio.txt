@@ -1,0 +1,19 @@
+# Portfolio data file - edit this to manage your stock holdings
+# Format: buy_date | symbol | exchange | quantity | buy_price
+# 
+# Fields:
+#   buy_date - Purchase date (YYYY-MM-DD)
+#   symbol   - Stock ticker symbol (e.g., BSR, DCM, VNM)
+#   exchange - Stock exchange (e.g., HOSE, HNX)
+#   quantity - Number of shares (must be > 0)
+#   buy_price - Purchase price per share (must be > 0)
+#
+# Notes:
+#   - Empty lines are ignored
+#   - Lines starting with # are comments and ignored
+#   - All fields must be present and separated by pipes (|)
+#   - No trailing spaces after the last field
+#
+# Example entries:
+2026-05-25|BSR|HOSE|8|30900
+2026-05-25|DCM|HOSE|5|41900

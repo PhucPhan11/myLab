@@ -12,25 +12,18 @@ from typing import List, Dict
 # Portfolio entries - customize this with your actual holdings
 PORTFOLIO: List[Dict] = [
     {
-        "buy_date": "2026-05-01",
+        "buy_date": "2026-05-25",
         "symbol": "BSR",
         "exchange": "HOSE",
-        "quantity": 1000,
-        "buy_price": 18000
+        "quantity": 8,
+        "buy_price": 30900
     },
     {
-        "buy_date": "2026-04-15",
-        "symbol": "FPT",
+        "buy_date": "2026-05-25",
+        "symbol": "DCM",
         "exchange": "HOSE",
-        "quantity": 200,
-        "buy_price": 120000
-    },
-    {
-        "buy_date": "2026-03-20",
-        "symbol": "VNM",
-        "exchange": "HOSE",
-        "quantity": 100,
-        "buy_price": 87000
+        "quantity": 5,
+        "buy_price": 41900
     }
 ]
 

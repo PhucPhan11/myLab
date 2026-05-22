@@ -1,9 +1,10 @@
 # Production-Ready Portfolio Tracker
 
-A comprehensive Python stock portfolio tracking system using TradingView data (tvDatafeed) with support for multiple portfolio entries, automatic profit/loss calculations, and CSV reporting.
+A comprehensive Python stock portfolio tracking system using TradingView data (tvDatafeed) with support for multiple portfolio entries, automatic profit/loss calculations, and CSV reporting. **Now with externalized portfolio data management!**
 
 ## Features
 
+✅ **Externalized Portfolio Data** - Edit portfolio.txt, not Python code  
 ✅ **Multi-Entry Portfolio Support** - Track unlimited stocks  
 ✅ **Real-time Price Fetching** - Uses TradingView via tvDatafeed  
 ✅ **Comprehensive Metrics** - Profit/loss %, amounts, investment values  
@@ -23,25 +24,13 @@ pip install -r requirements.txt
 
 ### Basic Usage
 
-1. **Edit portfolio entries** in `portfolio_tracker.py` (lines 42-61):
+1. **Edit portfolio entries** in `portfolio.txt` (no code changes needed!):
 
-```python
-PORTFOLIO = [
-    {
-        "buy_date": "2026-05-01",
-        "symbol": "BSR",
-        "exchange": "HOSE",
-        "quantity": 1000,
-        "buy_price": 18000
-    },
-    {
-        "buy_date": "2026-04-15",
-        "symbol": "FPT",
-        "exchange": "HOSE",
-        "quantity": 200,
-        "buy_price": 120000
-    }
-]
+```txt
+# Format: buy_date | symbol | exchange | quantity | buy_price
+2026-05-25|BSR|HOSE|8|30900
+2026-05-25|DCM|HOSE|5|41900
+2026-05-20|FPT|HOSE|10|60000
 ```
 
 2. **Run the tracker**:
@@ -82,16 +71,76 @@ Report saved to: portfolio_report.csv
 
 ```
 portfolio_tracker.py      # Main script
-portfolio_config.py       # Configuration & portfolio data
+portfolio_loader.py       # Portfolio data loader (NEW!)
+portfolio.txt             # Portfolio data file (externalized!)
+portfolio_config.py       # Configuration & settings
 requirements.txt          # Python dependencies
 portfolio_report.csv      # Generated report (created at runtime)
 README.md                 # This file
 ```
 
+## Portfolio Data Format
+
+Edit `portfolio.txt` to define your portfolio (no code changes needed!):
+
+```txt
+# Format: buy_date | symbol | exchange | quantity | buy_price
+# Comments start with # and are ignored
+# Empty lines are ignored
+
+2026-05-25|BSR|HOSE|8|30900
+2026-05-25|DCM|HOSE|5|41900
+2026-05-20|FPT|HOSE|10|60000
+```
+
+### File Format Specification
+
+| Field | Type | Example | Notes |
+|-------|------|---------|-------|
+| buy_date | Date (YYYY-MM-DD) | 2026-05-25 | Purchase date |
+| symbol | String | BSR | Stock ticker symbol |
+| exchange | String | HOSE | Exchange code |
+| quantity | Integer | 8 | Number of shares (must be >0) |
+| buy_price | Float | 30900 | Price per share (must be >0) |
+
+Rules:
+- Separator: Pipe `|` character
+- Comments: Lines starting with `#` are ignored
+- Empty lines: Ignored automatically
+- Whitespace: Auto-trimmed from fields
+- Case: Symbols/exchanges auto-converted to uppercase
+
+## Configuration
+
+### Portfolio File (`portfolio.txt`)
+
+Simply edit `portfolio.txt` to add/remove/modify stocks:
+
+```txt
+2026-05-25|BSR|HOSE|8|30900
+2026-05-25|DCM|HOSE|5|41900
+2026-05-20|FPT|HOSE|10|60000
+```
+
+The application automatically loads this file at startup.
+
+### Application Settings
+
+Edit `CURRENCY` and `OUTPUT_CSV` constants in `portfolio_tracker.py`:
+
+```python
+CURRENCY = "VND"
+OUTPUT_CSV = "portfolio_report.csv"
+```
+
+For advanced configuration, see `portfolio_config.py`.
+
 ## Core Functions
 
 | Function | Purpose |
 |----------|---------|
+| `load_portfolio_from_file()` | Load portfolio from portfolio.txt file |
+| `validate_portfolio()` | Validate portfolio data consistency |
 | `fetch_stock_price()` | Fetch latest price from TradingView |
 | `calculate_position_metrics()` | Calculate P&L for single position |
 | `print_position_summary()` | Display formatted position details |
@@ -100,34 +149,6 @@ README.md                 # This file
 | `create_portfolio_dataframe()` | Convert to pandas DataFrame |
 | `export_to_csv()` | Export portfolio to CSV |
 | `process_portfolio()` | Main orchestration function |
-
-## Portfolio Entry Structure
-
-Each portfolio entry requires:
-
-```python
-{
-    "buy_date": "YYYY-MM-DD",      # Purchase date
-    "symbol": "BSR",                # Stock symbol
-    "exchange": "HOSE",             # Exchange (HOSE, HNX, UPCOM)
-    "quantity": 1000,               # Number of shares
-    "buy_price": 18000              # Purchase price per share
-}
-```
-
-## Configuration
-
-Edit `PORTFOLIO` and `SETTINGS` constants in `portfolio_tracker.py`:
-
-```python
-CURRENCY = "VND"
-OUTPUT_CSV = "portfolio_report.csv"
-```
-
-For more advanced config, use `portfolio_config.py` to:
-- Load portfolio from JSON
-- Load from environment variables
-- Connect to databases
 
 ## Calculated Metrics
 
@@ -145,6 +166,8 @@ For each position, the tracker calculates:
 The script logs all operations to console:
 
 ```
+2026-05-22 11:56:14,859 - INFO - Portfolio loaded successfully from portfolio.txt
+2026-05-22 11:56:14,859 - INFO - Loaded 2 portfolio entries
 2026-05-21 15:20:30,123 - INFO - Starting portfolio analysis
 2026-05-21 15:20:31,456 - INFO - Fetching price for HOSE:BSR
 2026-05-21 15:20:32,789 - INFO - Got price for HOSE:BSR: 19,200
@@ -158,7 +181,15 @@ logging.basicConfig(level=logging.INFO)
 
 ## Advanced Usage
 
-### Load Portfolio from JSON
+### Load Portfolio from Text File
+
+The portfolio is automatically loaded from `portfolio.txt`:
+
+```bash
+python portfolio_tracker.py
+```
+
+### Load Portfolio from JSON (Alternative)
 
 ```python
 from portfolio_config import load_portfolio_from_json

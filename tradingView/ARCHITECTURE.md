@@ -3,6 +3,12 @@ Extended Portfolio Tracker - Production Architecture & Scaling Guide
 
 This module demonstrates how to scale the portfolio tracker from standalone
 script to a production system with database, API, real-time updates, and web UI.
+
+REFACTORING UPDATE (Latest):
+- Portfolio data now externalized to portfolio.txt
+- New portfolio_loader.py module handles file I/O and validation
+- No code changes needed to add/remove stocks
+- Type-safe, with comprehensive error handling
 """
 
 # ============================================================================
@@ -10,8 +16,9 @@ script to a production system with database, API, real-time updates, and web UI.
 # ============================================================================
 
 """
-CURRENT STATE (portfolio_tracker.py):
-├── Data Input: Portfolio list (hardcoded or config)
+CURRENT STATE (portfolio_tracker.py with portfolio_loader.py):
+├── Data Input: Portfolio file (portfolio.txt)
+├── Data Loading: portfolio_loader.py (validation & parsing)
 ├── Price Fetching: TvDatafeed API calls
 ├── Calculations: Portfolio metrics
 ├── Output: Console + CSV file
@@ -31,6 +38,12 @@ SCALABLE ARCHITECTURE:
 │  ┌──────────────┬──────────────┬──────────────────────┐         │
 │  │  PostgreSQL  │  Redis Cache │  Message Queue       │         │
 │  │  (Portfolio) │  (Prices)    │  (RabbitMQ/Kafka)    │         │
+│  └──────────────┴──────────────┴──────────────────────┘         │
+├─────────────────────────────────────────────────────────────────┤
+│                  DATA LOADING & VALIDATION                       │
+│  ┌──────────────┬──────────────┬──────────────────────┐         │
+│  │portfolio.txt │  portfolio   │   Data Loader        │         │
+│  │(User data)   │ _loader.py   │  (Parsing & Validation)        │
 │  └──────────────┴──────────────┴──────────────────────┘         │
 ├─────────────────────────────────────────────────────────────────┤
 │                    EXTERNAL DATA SOURCES                         │

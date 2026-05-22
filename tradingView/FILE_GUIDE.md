@@ -2,13 +2,13 @@
 # Portfolio Tracker - File Guide
 
 # ===========================================================
-#  📁 COMPLETE PROJECT FILE LISTING
+#  📁 COMPLETE PROJECT FILE LISTING (with refactoring)
 # ===========================================================
 
 echo "
 ╔════════════════════════════════════════════════════════════╗
 ║        PORTFOLIO TRACKER - PROJECT FILES                  ║
-║                   v1.0.0 Complete                         ║
+║                 v1.1.0 with Refactoring                   ║
 ╚════════════════════════════════════════════════════════════╝
 
 📂 PROJECT STRUCTURE
@@ -22,15 +22,19 @@ echo "
 ├─ 🚀 QUICK START
 │  ├─ QUICKSTART.md ........................ 5-minute setup guide
 │  ├─ portfolio_tracker.py ................. MAIN SCRIPT - RUN THIS!
+│  ├─ portfolio_loader.py .................. Portfolio data loader (NEW!)
+│  ├─ portfolio.txt ........................ Portfolio data file (NEW!)
 │  └─ portfolio_config.py .................. Configuration file
 │
 ├─ 📚 MAIN DOCUMENTATION
-│  ├─ README.md ............................ Complete feature guide
-│  ├─ PROJECT_SUMMARY.md ................... Project overview
+│  ├─ README.md ............................ Complete feature guide (UPDATED)
+│  ├─ PORTFOLIO_REFACTORING.md ............ Refactoring guide (NEW!)
+│  ├─ REFACTORING_SUMMARY.md .............. Quick refactoring summary (NEW!)
+│  ├─ PROJECT_SUMMARY.md ................... Project overview (UPDATED)
 │  └─ INDEX.md ............................. Documentation navigator
 │
 ├─ 🏗️ SCALING & ARCHITECTURE
-│  ├─ ARCHITECTURE.md ...................... 19 KB - Complete scaling guide
+│  ├─ ARCHITECTURE.md ...................... 19 KB - Complete scaling guide (UPDATED)
 │  ├─ IMPLEMENTATION_GUIDE.md .............. 20 KB - Week-by-week roadmap
 │  └─ advanced_integration.py .............. 580 lines - Code examples
 │
@@ -65,9 +69,21 @@ portfolio_tracker.py (Main Code - 350 lines)
   └─ All features implemented
   └─ Production-quality code
 
-QUICKSTART.md (5-Minute Guide)
+portfolio_loader.py (Portfolio Data Loader - 160 lines) [NEW!]
+  └─ Loads portfolio from portfolio.txt file
+  └─ Comprehensive validation with error messages
+  └─ Handles comments and empty lines
+  └─ Type hints and production-ready
+
+portfolio.txt (Portfolio Data File) [NEW!]
+  └─ Simple pipe-separated format
+  └─ Edit to add/remove stocks
+  └─ No Python code changes needed
+  └─ Self-documented with examples
+
+QUICKSTART.md (5-Minute Guide) [UPDATED]
   └─ Installation
-  └─ Configuration
+  └─ Edit portfolio.txt (no code changes!)
   └─ First run
   └─ Troubleshooting
 
@@ -79,13 +95,27 @@ portfolio_config.py (Configuration - 60 lines)
 🟦 UNDERSTAND IT
 ─────────────────────────────────────────────────────────────
 
-README.md (Complete Guide - 150 lines)
+README.md (Complete Guide - 150 lines) [UPDATED]
   └─ Feature overview
-  └─ Installation instructions
+  └─ Portfolio file format
   └─ Configuration options
   └─ API documentation
   └─ Advanced usage
   └─ Troubleshooting
+
+PORTFOLIO_REFACTORING.md (Refactoring Guide - 300 lines) [NEW!]
+  └─ Why externalize data?
+  └─ File format specifications
+  └─ Best practices and examples
+  └─ Future improvements (CSV, JSON, Database, Google Sheets)
+  └─ Migration guide
+  └─ Troubleshooting
+
+REFACTORING_SUMMARY.md (Quick Summary - 300 lines) [NEW!]
+  └─ What changed and why
+  └─ API reference
+  └─ Testing results
+  └─ Verification checklist
 
 VISUAL_SUMMARY.md (Visual Guide - 400 lines)
   └─ System architecture diagram
@@ -107,8 +137,9 @@ FEATURES_CHECKLIST.md (Complete List - 350 lines)
 🟩 SCALE IT UP
 ─────────────────────────────────────────────────────────────
 
-ARCHITECTURE.md (Scaling Guide - 500 lines, 19 KB)
+ARCHITECTURE.md (Scaling Guide - 500 lines, 19 KB) [UPDATED]
   └─ 7-layer architecture
+  └─ Data loading layer included
   └─ Layer 1: Database (SQLite/PostgreSQL)
   └─ Layer 2: Caching (Redis)
   └─ Layer 3: Message Queue (Celery/RabbitMQ)
@@ -148,8 +179,9 @@ advanced_integration.py (Examples - 580 lines, 13 KB)
 🟦 REFERENCE
 ─────────────────────────────────────────────────────────────
 
-PROJECT_SUMMARY.md (Overview - 300 lines, 9 KB)
+PROJECT_SUMMARY.md (Overview - 350 lines, 10 KB) [UPDATED]
   └─ Project completion status
+  └─ Refactoring updates
   └─ All deliverables listed
   └─ Test results
   └─ Key features
@@ -176,18 +208,20 @@ requirements.txt (Dependencies)
 🗺️ READING PATHS
 ═══════════════════════════════════════════════════════════════
 
-PATH 1: \"Just Make It Work\" (5 minutes)
+PATH 1: "Just Make It Work" (5 minutes)
   1. Start here → START_HERE.md
   2. Quick setup → QUICKSTART.md
-  3. Run → python portfolio_tracker.py
-  4. Done! Check portfolio_report.csv
+  3. Edit portfolio.txt with your stocks
+  4. Run → python portfolio_tracker.py
+  5. Done! Check portfolio_report.csv
 
-PATH 2: \"Understand It\" (30 minutes)
+PATH 2: "Understand It" (30 minutes)
   1. Start here → START_HERE.md
-  2. Overview → VISUAL_SUMMARY.md
-  3. Details → README.md
-  4. Features → FEATURES_CHECKLIST.md
-  5. Code → portfolio_tracker.py
+  2. Refactoring → PORTFOLIO_REFACTORING.md (understand why externalized)
+  3. Overview → VISUAL_SUMMARY.md
+  4. Details → README.md
+  5. Features → FEATURES_CHECKLIST.md
+  6. Code → portfolio_tracker.py and portfolio_loader.py
 
 PATH 3: \"Scale It\" (1-2 hours)
   1. Architecture → ARCHITECTURE.md
@@ -207,26 +241,34 @@ PATH 4: \"Master It\" (3-4 hours)
 ═══════════════════════════════════════════════════════════════
 
 CODE:
-  ├─ Python files: 3
-  ├─ Total lines: 990 lines
+  ├─ Python files: 4
+  ├─ Total lines: 1,150+ lines
   ├─ Main script: 350 lines
+  ├─ Portfolio loader: 160 lines (NEW!)
   ├─ Examples: 580 lines
   ├─ Configuration: 60 lines
-  └─ Functions: 10 reusable functions
+  └─ Functions: 12+ reusable functions
+
+DATA FILES:
+  ├─ portfolio.txt: Example data file (NEW!)
+  └─ Pipe-separated format
 
 DOCUMENTATION:
-  ├─ Markdown files: 9
-  ├─ Total lines: 3,600+ lines
-  ├─ Total size: 95 KB
-  ├─ Guides: 9
+  ├─ Markdown files: 13
+  ├─ New docs: 2 (Refactoring guides)
+  ├─ Updated docs: 3 (README, QUICKSTART, START_HERE, ARCHITECTURE, PROJECT_SUMMARY)
+  ├─ Total lines: 3,700+ lines
+  ├─ Total size: 155 KB
+  ├─ Guides: 13
   └─ Coverage: 100% of features
 
 TOTAL PROJECT:
-  ├─ Files: 15
-  ├─ Code: ~1,000 lines
-  ├─ Docs: ~3,600 lines
-  ├─ Size: ~120 KB
-  └─ Status: ✅ COMPLETE
+  ├─ Files: 20+
+  ├─ Code: ~1,200 lines
+  ├─ Docs: ~3,700 lines
+  ├─ Data files: 2
+  ├─ Size: ~155 KB
+  └─ Status: ✅ COMPLETE WITH REFACTORING
 
 ═══════════════════════════════════════════════════════════════
 

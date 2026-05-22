@@ -8,7 +8,12 @@ Welcome! Your **production-ready stock portfolio tracker** is ready to use.
 # 1. Install dependencies
 pip install -r requirements.txt
 
-# 2. Run the tracker
+# 2. Edit portfolio.txt with your stocks
+# Format: buy_date|symbol|exchange|quantity|buy_price
+# Example:
+# 2026-05-25|BSR|HOSE|8|30900
+
+# 3. Run the tracker
 python portfolio_tracker.py
 
 # Done! Check portfolio_report.csv
@@ -16,10 +21,16 @@ python portfolio_tracker.py
 
 ## 📦 What You Got
 
-### ✅ Working Code (26 KB)
+### ✅ Working Code (35+ KB)
 - **portfolio_tracker.py** (350 lines) - Main system, READY TO RUN NOW
-- **portfolio_config.py** (60 lines) - Configuration & portfolio data
+- **portfolio_loader.py** (160 lines) - Portfolio data loader (NEW!)
+- **portfolio_config.py** (60 lines) - Configuration & settings
 - **advanced_integration.py** (580 lines) - Production integration examples
+
+### ✅ Portfolio Data File (NEW!)
+- **portfolio.txt** - Simple text file for portfolio management
+- **PORTFOLIO_REFACTORING.md** - Refactoring documentation
+- **REFACTORING_SUMMARY.md** - Quick refactoring summary
 
 ### ✅ Complete Documentation (95 KB)
 - **QUICKSTART.md** - 5-minute setup guide
@@ -61,21 +72,26 @@ Profit/Loss:        +9,900,000 VND (+37.08%)
 | File | Type | Size | Status |
 |------|------|------|--------|
 | portfolio_tracker.py | Code | 11 KB | ✅ Complete |
+| portfolio_loader.py | Code | 5 KB | ✅ Complete (NEW!) |
+| portfolio.txt | Data | 1 KB | ✅ Example |
 | portfolio_config.py | Code | 2 KB | ✅ Complete |
 | advanced_integration.py | Code | 13 KB | ✅ Complete |
 | requirements.txt | Config | <1 KB | ✅ Complete |
-| README.md | Docs | 8 KB | ✅ Complete |
-| QUICKSTART.md | Docs | 6 KB | ✅ Complete |
+| README.md | Docs | 8 KB | ✅ Updated |
+| QUICKSTART.md | Docs | 6 KB | ✅ Updated |
+| PORTFOLIO_REFACTORING.md | Docs | 10 KB | ✅ Complete (NEW!) |
+| REFACTORING_SUMMARY.md | Docs | 10 KB | ✅ Complete (NEW!) |
 | ARCHITECTURE.md | Docs | 20 KB | ✅ Complete |
 | IMPLEMENTATION_GUIDE.md | Docs | 20 KB | ✅ Complete |
 | PROJECT_SUMMARY.md | Docs | 9 KB | ✅ Complete |
 | FEATURES_CHECKLIST.md | Docs | 10 KB | ✅ Complete |
 | VISUAL_SUMMARY.md | Docs | 11 KB | ✅ Complete |
 | INDEX.md | Docs | 10 KB | ✅ Complete |
-| **TOTAL** | | **~120 KB** | ✅ **COMPLETE** |
+| **TOTAL** | | **~155 KB** | ✅ **COMPLETE** |
 
 ## 🎯 Features Included
 
+✅ **Externalized Portfolio Data** - Edit portfolio.txt, not Python code!  
 ✅ **Multi-portfolio support** - Unlimited stocks  
 ✅ **Real-time prices** - From TradingView  
 ✅ **P&L calculations** - Automatic  
@@ -91,15 +107,26 @@ Profit/Loss:        +9,900,000 VND (+37.08%)
 
 ### I Just Want To Run It
 → **[QUICKSTART.md](QUICKSTART.md)** (5 minutes)
+1. Edit portfolio.txt
+2. Run: `python portfolio_tracker.py`
+3. Check portfolio_report.csv
 
 ### I Want To Understand It
 → **[README.md](README.md)** (Complete guide)
+- Features overview
+- Portfolio file format
+- Configuration options
+- Function reference
+
+### I Want To Learn About The Refactoring
+→ **[PORTFOLIO_REFACTORING.md](PORTFOLIO_REFACTORING.md)** (10+ KB)
+- Why externalize data?
+- File format specifications
+- Best practices & examples
+- Future improvements (CSV, JSON, Database, Google Sheets)
 
 ### I Want To See What's Included
 → **[FEATURES_CHECKLIST.md](FEATURES_CHECKLIST.md)** (Complete list)
-
-### I Want A Visual Overview
-→ **[VISUAL_SUMMARY.md](VISUAL_SUMMARY.md)** (Pictures & diagrams)
 
 ### I Want To Scale It
 → **[ARCHITECTURE.md](ARCHITECTURE.md)** (19 KB scaling guide)
